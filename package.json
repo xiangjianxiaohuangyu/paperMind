@@ -1,0 +1,21 @@
+{
+  "name": "papermind",
+  "version": "1.0.0",
+  "description": "论文解析系统",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "dev:backend": "concurrently \"npm run start:gateway\" \"npm run start:user\" \"npm run start:paper\" \"npm run start:ai\"",
+    "dev:frontend": "cd frontend && npm start",
+    "start:gateway": "cd backend/gateway-service && mvn spring-boot:run",
+    "start:user": "cd backend/user-service && mvn spring-boot:run",
+    "start:paper": "cd backend/paper-service && mvn spring-boot:run",
+    "start:ai": "cd backend/ai-engine && mvn spring-boot:run",
+    "start:frontend": "cd frontend && npm start",
+    "install:all": "npm install && cd frontend && npm install && cd ../backend && mvn dependency:go-offline",
+    "init:db": "mysql -u root -p < sql/init.sql"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.0"
+  }
+}

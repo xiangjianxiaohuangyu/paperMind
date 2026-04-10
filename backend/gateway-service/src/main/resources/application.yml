@@ -1,0 +1,29 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: gateway-service
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+        namespace: public
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      routes:
+        - id: paper-service
+          uri: lb://paper-service
+          predicates:
+            - Path=/papers/**
+        - id: ai-engine
+          uri: lb://ai-engine
+          predicates:
+            - Path=/ai/**
+        - id: user-service
+          uri: lb://user-service
+          predicates:
+            - Path=/users/**
