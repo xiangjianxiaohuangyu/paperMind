@@ -1,5 +1,18 @@
 package com.papermind.user.dto;
 
+/**
+ * DTO 层（Data Transfer Object，数据传输对象）
+ *
+ * 【核心定位】前后端数据传输的"包装盒"
+ *
+ * 【为什么需要 DTO】
+ * 1. Entity 是直接和数据库表一一对应的（User ↔ users 表）
+ * 2. 前端不需要知道数据库的内部结构，也不需要全部字段
+ * 3. DTO 可以只暴露前端需要的字段，减少数据泄露风险
+ *
+ * 【本类触发场景】
+ * 前端用户在登录页面输入用户名和密码，点击登录按钮时发送的请求体
+ */
 public class LoginRequest {
     private String username;
     private String password;

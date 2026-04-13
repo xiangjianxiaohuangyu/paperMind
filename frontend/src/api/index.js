@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'http://localhost:8080',
+  baseURL: 'http://localhost:8081',
   timeout: 30000,
   headers: {
     'Content-Type': 'application/json'
@@ -39,6 +39,14 @@ export const paperAPI = {
 };
 
 export const userAPI = {
+  login: (data) => {
+    return api.post('/users/login', data);
+  },
+
+  register: (data) => {
+    return api.post('/users/register', data);
+  },
+
   getUser: (id) => {
     return api.get(`/users/${id}`);
   }

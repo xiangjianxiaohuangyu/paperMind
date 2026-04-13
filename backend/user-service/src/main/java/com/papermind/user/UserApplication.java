@@ -2,6 +2,9 @@ package com.papermind.user;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
  * @SpringBootApplication ≈
@@ -23,5 +26,19 @@ public class UserApplication {
             ├── 4. 启动内嵌的 Web 服务器（如 Tomcat、Jetty）
             ├── 5. 执行自动配置（根据 classpath 中的依赖）
             └── 6. 返回 ApplicationContext 对象 */
+    }
+
+    @Bean
+    public WebMvcConfigurer corsConfigurer() {
+        return new WebMvcConfigurer() {
+            @Override
+            public void addCorsMappings(CorsRegistry registry) {
+                registry.addMapping("/**")
+                        .allowedOrigins("http://localhost:3000")
+                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+                        .allowedHeaders("*")
+                        .allowCredentials(true);
+            }
+        };
     }
 }

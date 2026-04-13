@@ -12,6 +12,18 @@ import java.util.Optional;
 ✅ 完全不关心：业务逻辑，只负责读写数据库
 ✅ 对应技术：MyBatis / MyBatis-Plus 
 */
+
+
+/** 【学习】
+ * // Spring Data JPA 自动生成的大致等价实现
+public class UserRepositoryImpl implements UserRepository {
+    @Override
+    public Optional<User> findByUsername(String username) {
+        // 自动生成 JPQL: SELECT u FROM User u WHERE u.username = ?1
+        return entityManager.createQuery(...).getResultList();
+    }
+}
+ */
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findByUsername(String username);

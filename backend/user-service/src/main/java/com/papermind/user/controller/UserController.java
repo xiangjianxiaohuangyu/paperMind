@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/users")
+@CrossOrigin(origins = "http://localhost:3000")
 public class UserController {
 
     private final UserService userService;
@@ -28,18 +29,36 @@ public class UserController {
         this.userService = userService;
     }
 
+    /**
+     * 用户注册接口
+     * 触发场景：用户在前端注册页面填写表单（用户名、邮箱、密码等）并提交时
+     * HTTP方法：POST
+     * 请求路径：/users/register
+     */
     @PostMapping("/register")
     public ResponseEntity<AuthResponse> register(@RequestBody RegisterRequest request) {
         AuthResponse response = userService.register(request);
         return ResponseEntity.ok(response);
     }
 
+    /**
+     * 用户登录接口
+     * 触发场景：用户在登录页面输入用户名/邮箱和密码，点击登录按钮时
+     * HTTP方法：POST
+     * 请求路径：/users/login
+     */
     @PostMapping("/login")
     public ResponseEntity<AuthResponse> login(@RequestBody LoginRequest request) {
         AuthResponse response = userService.login(request);
         return ResponseEntity.ok(response);
     }
 
+    /**
+     * 根据ID获取用户信息接口
+     * 触发场景：前端需要展示某个用户详情页时（如 /users/123 页面）
+     * HTTP方法：GET
+     * 请求路径：/users/{id}
+     */
     @GetMapping("/{id}")
     public ResponseEntity<User> getUserById(@PathVariable Long id) {
         return ResponseEntity.ok(userService.getUserById(id));
