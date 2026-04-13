@@ -20,6 +20,25 @@ function AppContent() {
     }
   }, []);
 
+  // 监听 localStorage 变化（其他页面修改了登录状态时同步更新）
+  useEffect(() => {
+    const handleStorageChange = (e) => {
+      if (e.key === 'token') {
+        const token = localStorage.getItem('token');
+        const savedUsername = localStorage.getItem('username');
+        if (token && savedUsername) {
+          setIsLoggedIn(true);
+          setUsername(savedUsername);
+        } else {
+          setIsLoggedIn(false);
+          setUsername('');
+        }
+      }
+    };
+    window.addEventListener('storage', handleStorageChange);
+    return () => window.removeEventListener('storage', handleStorageChange);
+  }, []);
+
   const handleLogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('username');
@@ -55,7 +74,7 @@ function AppContent() {
           <nav className="sidebar-nav">
             <Link to="/upload" className="nav-item">
               <span className="nav-icon">📄</span>
-              <span>我的论文</span>
+              <span>上传论文</span>
             </Link>
             <Link to="/list" className="nav-item">
               <span className="nav-icon">🤖</span>

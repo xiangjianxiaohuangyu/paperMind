@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { userAPI } from '../api';
 
-function AuthPage() {
+function AuthPage({ onLoginSuccess, setUsername }) {
   const navigate = useNavigate();
   const [isLogin, setIsLogin] = useState(true);
   const [formData, setFormData] = useState({
@@ -27,14 +27,20 @@ function AuthPage() {
 
     try {
       if (isLogin) {
+        console.log('准备登录, formData:', formData);
         const response = await userAPI.login({
           username: formData.username,
           password: formData.password
         });
+        console.log('登录响应:', response);
         // 保存登录信息到 localStorage
         localStorage.setItem('token', response.token);
         localStorage.setItem('username', response.username);
         localStorage.setItem('role', response.role);
+        // 通知 App 组件更新登录状态
+        if (onLoginSuccess) onLoginSuccess();
+        if (setUsername) setUsername(response.username);
+        console.log('准备跳转到 /upload');
         // 跳转到上传页面
         navigate('/upload');
       } else {
